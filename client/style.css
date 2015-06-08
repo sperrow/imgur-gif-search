@@ -14,7 +14,7 @@ body {
 
 .search input {
   margin-bottom: 20px;
-  width: 500px;
+  width: auto;
 }
 
 video {

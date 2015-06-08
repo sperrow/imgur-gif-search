@@ -18,23 +18,16 @@
         <span class="heading">Gif Search</span>
       </div>
       <div class="container">
-        <h3>1.</h3>
-        <a href="https://api.imgur.com/oauth2/authorize?client_id=9a064529bee0987&response_type=code">
-          <button type="button" class="btn btn-lg btn-success">Authorize Imgur</button>
-        </a>
-      </div>
-      <div class="container">
         <form class="search" ng-submit="search()">
           <div class="form-group">
-            <h3>2.</h3>
-            <p>What are you looking for? (puppies are always a good choice)</p>
+            <h3>What are you looking for? (puppies are always a good choice)</h3>
             <input type="text" class="form-control" name="query" ng-model="query">
-            <button type="submit" class="btn btn-lg btn-primary">Search</button>
+            <button type="submit" class="btn btn-lg btn-success">Search</button>
           </div>
         </form>
       </div>
     </div>
-    <div class="container-fluid" ng-show="results">
+    <div class="container" ng-show="results">
       <div class="container">
         <div ng-repeat="result in results | limitTo:quantity">
           <video autoplay muted loop>
