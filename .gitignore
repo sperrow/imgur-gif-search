@@ -1,0 +1,11 @@
+# Dependency directorys
+node_modules/
+
+# Floobits
+.floo
+.floobit
+.floo
+.flooignore
+
+# Env variables
+config.js

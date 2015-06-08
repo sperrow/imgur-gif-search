@@ -1,0 +1,51 @@
+<!doctype html>
+<html ng-app="remixApp">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Imgur Gif Search</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Varela+Round">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+    <script src="index.js"></script>
+  </head>
+  <body ng-controller="ImgurController">
+    <div class="jumbotron">
+      <div class="container">
+        <img class="logo" src="http://logonoid.com/images/imgur-logo.png">
+        <span class="heading">Gif Search</span>
+      </div>
+      <div class="container">
+        <h3>1.</h3>
+        <a href="https://api.imgur.com/oauth2/authorize?client_id=9a064529bee0987&response_type=code">
+          <button type="button" class="btn btn-lg btn-success">Authorize Imgur</button>
+        </a>
+      </div>
+      <div class="container">
+        <form class="search" ng-submit="search()">
+          <div class="form-group">
+            <h3>2.</h3>
+            <p>What are you looking for? (puppies are always a good choice)</p>
+            <input type="text" class="form-control" name="query" ng-model="query">
+            <button type="submit" class="btn btn-lg btn-primary">Search</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="container-fluid" ng-show="results">
+      <div class="container">
+        <div ng-repeat="result in results | limitTo:quantity">
+          <video autoplay muted loop>
+            <source src={{result.webm}} type="video/webm">
+            <source src={{result.mp4}} type="video/mp4">
+          </video>
+        </div>
+        <div class="more-button" ng-show="moreResults">
+          <button type="click" class="btn btn-lg btn-default" ng-click="showMore()">Show More</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
