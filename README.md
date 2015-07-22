@@ -1,3 +1,3 @@
 # Imgur Gif Search
 
-https://remix-challenge.herokuapp.com/
+https://imgur-gif-search.herokuapp.com/
