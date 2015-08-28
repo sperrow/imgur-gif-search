@@ -28,4 +28,5 @@ video {
 
 .more-button {
   padding: 30px 0;
+  clear: left;
 }
