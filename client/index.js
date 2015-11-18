@@ -1,4 +1,8 @@
-var app = angular.module('remixApp', [])
+// '7c6e059ab0d1c94' for production, 'bf2367d089429e4' for local development
+var clientId = '7c6e059ab0d1c94';
+var errorUrl = 'https://api.imgur.com/oauth2/authorize?client_id=' + clientId + '&response_type=code';
+
+var app = angular.module('imgurApp', [])
 
 .factory('Imgur', function($http) {
   var getSearch = function(query) {
@@ -23,18 +27,35 @@ var app = angular.module('remixApp', [])
 .controller('ImgurController', function($scope, $http, Imgur) {
   $scope.query;
   $scope.results;
+  $scope.custom = false;
   $scope.quantity = 10;
   $scope.moreResults = true;
 
-  $scope.search = function() {
+  $scope.searchButton = function(query) {
+    $scope.custom = false;
+    Imgur.getSearch(query)
+    .success(function(results) {
+      $scope.results = Array.prototype.slice.call(results.data);
+    })
+    .error(function(error) {
+      // if error, redirect to imgur authorization page
+      window.location.href = errorUrl;
+    });
+  };
+
+  $scope.searchCustom = function() {
     Imgur.getSearch($scope.query)
     .success(function(results) {
       $scope.results = Array.prototype.slice.call(results.data);
     })
     .error(function(error) {
       // if error, redirect to imgur authorization page
-      window.location.href = 'https://api.imgur.com/oauth2/authorize?client_id=9a064529bee0987&response_type=code';
+      window.location.href = errorUrl;
     });
+  };
+
+  $scope.toggleCustom = function() {
+    $scope.custom = !$scope.custom;
   };
 
   $scope.showMore = function() {

@@ -12,6 +12,34 @@ body {
   font-family: 'Varela Round', sans-serif;
 }
 
+.btn-row {
+  margin-bottom: 10px;
+}
+
+.btn-row .btn {
+  color: #fff;
+}
+
+.btn-row:nth-child(odd) .btn-group:nth-child(odd) .btn {
+  background-color: #5CB85C;
+  border-color: #4CAE4C;
+}
+
+.btn-row:nth-child(even) .btn-group:nth-child(even) .btn {
+  background-color: #5CB85C;
+  border-color: #4CAE4C;
+}
+
+.btn-row:nth-child(odd) .btn-group:nth-child(even) .btn {
+  background-color: #8AC724;
+  border-color: #4CAE4C;
+}
+
+.btn-row:nth-child(even) .btn-group:nth-child(odd) .btn {
+  background-color: #8AC724;
+  border-color: #4CAE4C;
+}
+
 .search input {
   margin-bottom: 20px;
   width: auto;

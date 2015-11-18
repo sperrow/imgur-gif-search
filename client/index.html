@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app="remixApp">
+<html ng-app="imgurApp">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,17 +14,79 @@
   <body ng-controller="ImgurController">
     <div class="jumbotron">
       <div class="container">
-        <img class="logo" src="http://logonoid.com/images/imgur-logo.png">
+        <img class="logo" src="http://i.imgur.com/rbUKvNP.png">
         <span class="heading">Gif Search</span>
       </div>
       <div class="container">
-        <form class="search" ng-submit="search()">
+      
+        <h3>What are you looking for?</h3>
+        <div class="btn-group btn-group-justified btn-row" role="group">
+          <div class="btn-group" role="group">
+            <button type="button" class="btn" ng-click="searchButton('animals')">animals</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn" ng-click="searchButton('puppies')">puppies</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn" ng-click="searchButton('kittens')">kittens</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn" ng-click="searchButton('hedgehogs')">hedgehogs</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn" ng-click="searchButton('penguins')">penguins</button>
+          </div>
+        </div>
+        <div class="btn-group btn-group-justified btn-row" role="group">
+          <div class="btn-group" role="group">
+            <button type="button" class="btn" ng-click="searchButton('news')">news</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn" ng-click="searchButton('celebrities')">celebrities</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn" ng-click="searchButton('sports')">sports</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn" ng-click="searchButton('anime')">anime</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn" ng-click="searchButton('movies')">movies</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn" ng-click="searchButton('tv')">tv</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn" ng-click="searchButton('gaming')">gaming</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn" ng-click="searchButton('music')">music</button>
+          </div>
+        </div>
+        <div class="btn-group btn-group-justified btn-row" role="group">
+          <div class="btn-group" role="group">
+            <button type="button" class="btn" ng-click="searchButton('reactions')">reactions</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn" ng-click="searchButton('memes')">memes</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn" ng-click="searchButton('trippy')">trippy</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn" ng-click="searchButton('3D')">3D</button>
+          </div>
+        </div>
+
+        <button type="button" class="btn btn-info center-block" ng-click="toggleCustom()">custom</button>
+        <br>
+        <form class="search" ng-submit="searchCustom()" ng-show="custom">
           <div class="form-group">
-            <h3>What are you looking for? (puppies are always a good choice)</h3>
-            <input type="text" class="form-control" name="query" ng-model="query">
-            <button type="submit" class="btn btn-lg btn-success">Search</button>
+            <input type="text" class="form-control center-block" name="query" ng-model="query">
+            <button type="submit" class="btn btn-default center-block">Search</button>
           </div>
         </form>
+
       </div>
     </div>
     <div class="container" ng-show="results">

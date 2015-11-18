@@ -9,7 +9,7 @@ if (!process.env.CLIENT_ID) {
   var config = require('./config.js');
 }
 
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 3999;
 
 var app = express();
 
