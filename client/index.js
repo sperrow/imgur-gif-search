@@ -28,13 +28,17 @@ var app = angular.module('imgurApp', [])
   $scope.query;
   $scope.results;
   $scope.custom = false;
+  $scope.loading = false;
   $scope.quantity = 10;
   $scope.moreResults = true;
 
   $scope.searchButton = function(query) {
     $scope.custom = false;
+    $scope.loading = true;
+    $scope.results = [];
     Imgur.getSearch(query)
     .success(function(results) {
+      $scope.loading = false;
       $scope.results = Array.prototype.slice.call(results.data);
     })
     .error(function(error) {
@@ -44,8 +48,11 @@ var app = angular.module('imgurApp', [])
   };
 
   $scope.searchCustom = function() {
+    $scope.results = [];
+    $scope.loading = true;
     Imgur.getSearch($scope.query)
     .success(function(results) {
+      $scope.loading = false;
       $scope.results = Array.prototype.slice.call(results.data);
     })
     .error(function(error) {
