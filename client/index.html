@@ -92,10 +92,12 @@
     <div class="container" ng-show="results">
       <div class="container">
         <div ng-repeat="result in results | limitTo:quantity">
-          <video autoplay muted loop>
-            <source src={{result.webm}} type="video/webm">
-            <source src={{result.mp4}} type="video/mp4">
-          </video>
+          <a ng-href="http://imgur.com/{{result.id}}" target="_blank">
+            <video autoplay muted loop>
+              <source src={{result.webm}} type="video/webm">
+              <source src={{result.mp4}} type="video/mp4">
+            </video>
+          </a>
         </div>
         <div class="more-button" ng-show="moreResults">
           <button type="click" class="btn btn-lg btn-default" ng-click="showMore()">Show More</button>
