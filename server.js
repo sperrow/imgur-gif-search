@@ -2,7 +2,8 @@ var express = require('express');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var request = require('request');
-
+var Promise = require('bluebird');
+Promise.promisifyAll(request);
 
 // for local development
 if (!process.env.CLIENT_ID) {
@@ -33,12 +34,17 @@ app.get('/api/code', function(req, res) {
     grant_type: 'authorization_code',
     code: req.query.code
   };
-  request.post('https://api.imgur.com/oauth2/token', {form: tokenForm}, function(err, response, body) {
-    body = JSON.parse(body);
-    accessToken = body.access_token;
-    refreshToken = body.refresh_token;
-    res.redirect('/');
-  });
+  request.postAsync('https://api.imgur.com/oauth2/token', {form: tokenForm})
+    .then(function(response) {
+      body = JSON.parse(response.body);
+      accessToken = body.access_token;
+      refreshToken = body.refresh_token;
+      res.redirect('/');
+    })
+    .catch(function(err) {
+      console.log('err:', err);
+      res.send(err, 500);
+    });
 });
 
 var searchUrl = 'https://api.imgur.com/3/gallery/search/?q_type=anigif&q=';
@@ -58,33 +64,40 @@ app.get('/api/search', function(req, res) {
         'Authorization': 'Bearer ' + accessToken
       }
     };
-    request(searchOptions, function(err, response, body) {
-      body = JSON.parse(body);
-      // refresh token if expired
-      if (body.data.error) {
-        var refreshForm = {
-          refresh_token: refreshToken,
-          client_id: clientId,
-          client_secret: clientSecret,
-          grant_type: 'refresh_token'
-        };
-        request.post('https://api.imgur.com/oauth2/token', {form: refreshForm}, function(err, response, body) {
-          body = JSON.parse(body);
-          accessToken = body.access_token;
-          refreshToken = body.refresh_token;
-          searchOptions.headers.Authorization = 'Bearer ' + accessToken;
-          // resend search request
-          request(searchOptions, function(err, response, body) {
-            body = JSON.parse(body);
-            res.send(body);
-          });
-        });
-      } else if (err) {
+
+    request.getAsync(searchOptions)
+      .then(function(response) {
+        body = JSON.parse(response.body);
+
+        // refresh token if expired
+        if (body.data.error) {
+          var refreshForm = {
+            refresh_token: refreshToken,
+            client_id: clientId,
+            client_secret: clientSecret,
+            grant_type: 'refresh_token'
+          };
+          request.postAsync('https://api.imgur.com/oauth2/token', {form: refreshForm})
+            .then(function(response) {
+              body = JSON.parse(response.body);
+              accessToken = body.access_token;
+              refreshToken = body.refresh_token;
+              searchOptions.headers.Authorization = 'Bearer ' + accessToken;
+              // resend search request
+              request.getAsync(searchOptions)
+                .then(function(response) {
+                  body = JSON.parse(response.body);
+                  res.send(body);
+                });
+            });
+        } else {
+          res.send(body);
+        }
+      })
+      .catch(function(err) {
+        console.log('err:', err);
         res.send(err, 500);
-      } else {
-        res.send(body);
-      }
-    });
+      });
 
   }
 });

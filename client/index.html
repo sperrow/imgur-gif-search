@@ -86,7 +86,7 @@
             <button type="submit" class="btn btn-default center-block">Search</button>
           </div>
         </form>
-        
+
         <div class="load-container">
           <div ng-show="loading">
             <span class="cssload-loader"><span class="cssload-loader-inner"></span></span>
@@ -100,8 +100,8 @@
         <div ng-repeat="result in results | limitTo:quantity">
           <a ng-href="http://imgur.com/{{result.id}}" target="_blank">
             <video autoplay muted loop>
-              <source src={{result.webm}} type="video/webm">
-              <source src={{result.mp4}} type="video/mp4">
+              <source ng-src={{result.webm}} type="video/webm">
+              <source ng-src={{result.mp4}} type="video/mp4">
             </video>
           </a>
         </div>
