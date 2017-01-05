@@ -45,6 +45,13 @@ body {
   width: auto;
 }
 
+.results-container {
+  background-color: black;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 video {
   width: 500px;
   height: 400px;
@@ -57,6 +64,18 @@ video {
 .more-button {
   padding: 30px 0;
   clear: left;
+}
+
+@media only screen and (max-device-width: 568px) {
+  .results-container {
+    max-width: 320px;
+  }
+
+  video {
+    width: 300px;
+    height: 240px;
+    padding: 20px;
+  }
 }
 
 /*loading animation*/
